@@ -1,3 +1,4 @@
+// Random computer's turn for rock-paper-scissors
 function getComputerChoice() {
     const turns = ['Rock', 'Paper', 'Scissors'];
 
@@ -5,6 +6,7 @@ function getComputerChoice() {
     return turns[randomIndex];
 }
 
+// Play one round of the rock-paper-scissors game
 function playRound(playerSelection, computerSelection) {
     playerSelection = playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1).toLowerCase();
 
@@ -31,6 +33,7 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
+// Play 5 rounds of the game and announce a winner
 function game() {
     let userScore = 0;
 
