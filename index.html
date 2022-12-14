@@ -3,8 +3,30 @@
     <head>
         <meta charset="UTF-8">
         <title>Rock Paper Scissors</title>
+        <link rel="stylesheet" href="style.css"></link>
+        <script src="script.js" defer></script>
     </head>
     <body>
-        <script src="script.js"></script>
+        <h1>RPS</h1>
+        <div class="choices">
+            <button class="choice" data-choice="Rock">Rock</button>
+            <button class="choice" data-choice="Paper">Paper</button>
+            <button class="choice" data-choice="Scissors">Scissors</button>
+        </div>
+        
+        <div class="scores">
+            <div class="score">
+                <h2>Computer's Score:</h2>
+                <div id="computerScore">0</div>
+            </div>
+            <div class="score">
+                <h2>Player's Score:</h2>
+                <div id="playerScore">0</div>
+            </div>
+        </div>
+
+        <div id="results">The results are yet to be announced!</div>
+        <div id="winnerAnnouncement"></div>
+        <button id="playAgain">Play Again!</button>
     </body>
 </html>

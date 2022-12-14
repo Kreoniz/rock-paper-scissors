@@ -13,14 +13,14 @@ function playRound(playerSelection, computerSelection) {
     if (playerSelection === computerSelection) {
         return {
             message: `It's a Tie! You both picked ${playerSelection}`,
-            score: 0.5
+            score: {'computer': 0, 'player': 0}
         };
     } else if (playerSelection === 'Rock' && computerSelection === 'Scissors'
     || playerSelection === 'Paper' && computerSelection === 'Rock'
     || playerSelection === 'Scissors' && computerSelection === 'Paper') {
         return {
             message: `You Win! ${playerSelection} beats ${computerSelection}`,
-            score: 1
+            score: {'computer': 0, 'player': 1}
         };
     } else if (computerSelection === 'Rock' && playerSelection === 'Scissors'
     || computerSelection === 'Paper' && playerSelection === 'Rock'
@@ -28,32 +28,46 @@ function playRound(playerSelection, computerSelection) {
     ) {
         return {
             message: `You Lose! ${computerSelection} beats ${playerSelection}`,
-            score: 0
+            score: {'computer': 1, 'player': 0}
         };
     }
 }
 
-// Play 5 rounds of the game and announce a winner
-function game() {
-    let userScore = 0;
+const choices = document.querySelectorAll('.choice');
+const results = document.querySelector('#results');
+const computerScore = document.querySelector('#computerScore');
+const playerScore = document.querySelector('#playerScore');
+const winnerAnnouncement = document.querySelector('#winnerAnnouncement');
+const playAgain = document.querySelector('#playAgain');
+let playing = true;
 
-    for (let i = 0; i < 5; i++) {
-        const playerSelection = prompt('Your turn:');
-        const computerSelection = getComputerChoice();
+choices.forEach(choice => {
+    choice.addEventListener('click', makeMove);
+});
+
+function makeMove(event) {
+    if (playing) {
+        const outcome = playRound(event.target.getAttribute('data-choice'), getComputerChoice());
+        results.textContent = outcome.message
+        computerScore.textContent = +computerScore.textContent + outcome.score.computer
+        playerScore.textContent = +playerScore.textContent + outcome.score.player
         
-        const result = playRound(playerSelection, computerSelection);
-
-        console.log(result.message);
-        userScore += result.score;
-    }
-
-    if (userScore / 2 > 5 / 2) {
-        console.log(`You Win! Your score is ${userScore}`);
-    } else if (userScore / 2 < 5 / 2) {
-        console.log(`You Lose! Your score is ${userScore}`);
-    } else if (userScore / 2 === 5 / 2) {
-        console.log(`It's a Tie! Your score is ${userScore}`);
+        if (computerScore.textContent == 5) {
+            playing = false;
+            winnerAnnouncement.textContent = "The silicon genius wins! AI is unrivaled!";
+        } else if (playerScore.textContent == 5) {
+            playing = false;
+            winnerAnnouncement.textContent = "Triumph of thought! The mighty human wins!";
+        }
     }
 }
 
-game()
+function resetGame() {
+    playing = true;
+    winnerAnnouncement.textContent = "";
+    results.textContent = "The results are yet to be announced!";
+    computerScore.textContent = 0;
+    playerScore.textContent = 0;
+}
+
+playAgain.addEventListener('click', resetGame);
